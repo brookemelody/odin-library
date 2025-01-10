@@ -47,14 +47,18 @@ addBookToLibrary('No Longer Human', 'Osamu Dazai', 176, true);
 const libraryContainer = document.querySelector(".library-container");
 
 /**
- * 
+ * Loops through the myLibrary array and displays each book on the page
  */
 function displayAllBooks()
 {
+    // Reset the contents of libraryContainer first
+    libraryContainer.textContent = "";
+
     // Loop through the array
     for (let book of myLibrary) {
         // Create an HTML element to display the book
         const bookContainer = document.createElement("div");
+        bookContainer.style.backgroundColor = "aliceblue";
         const bookTitleElement = document.createElement("h2");
         bookTitleElement.textContent = book.title;
         const bookAuthorElement = document.createElement("h3");
@@ -72,6 +76,7 @@ function displayAllBooks()
     }
 }
 
+// Call the displayAllBooks function on the initial elements of the array
 displayAllBooks();
 
 // Target the form element in the HTML
@@ -87,5 +92,8 @@ newBookForm.addEventListener("submit", (event) => {
     let author = newBookForm.elements['author'].value;
     let pages = newBookForm.elements['pages'].value;
     let read = newBookForm.elements['read'].value;
+    // Pass in the form data to the addBookToLibrary function
     addBookToLibrary(title, author, pages, read);
+    // Call the displayAllBooks function to update the DOM to display the new book
+    displayAllBooks();
 })
