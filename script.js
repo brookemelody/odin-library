@@ -34,8 +34,6 @@ function addBookToLibrary(title, author, pages, read) {
 
     // Add myBook to the myLibrary array
     myLibrary.push(myBook);
-
-    console.log(myBook.info()); // placeholder
 }
 
 // Populate the array with some initial elements
@@ -47,6 +45,20 @@ addBookToLibrary('No Longer Human', 'Osamu Dazai', 176, true);
 const libraryContainer = document.querySelector(".library-container");
 
 /**
+ * Removes the Book in the specified index from the myLibrary array and updates the DOM
+ * @param {int} index the index of the Book to be removed within the myLibrary array
+ */
+function removeBookFromLibrary(index)
+{
+    // Remove the book from the array
+    // Second argument of splice() method specifies the number of elements to delete
+    myLibrary.splice(index, 1);
+
+    // Call the displayAllBooks() function to update the DOM accordingly
+    displayAllBooks();
+}
+
+/**
  * Loops through the myLibrary array and displays each book on the page
  */
 function displayAllBooks()
@@ -56,9 +68,13 @@ function displayAllBooks()
 
     // Loop through the array
     for (let i = 0; i < myLibrary.length; i++) {
-        // Create an HTML element to display the book
+        // Create an HTML element to display the book in a card
         const bookContainer = document.createElement("div");
-        bookContainer.style.backgroundColor = "aliceblue";
+        // Add a data attribute to bookContainer that corresponds with the index of the myLibrary array
+        // This will associate the DOM element with the actual book object
+        bookContainer.setAttribute("data-index-number", i);
+
+        // Create HTML elements for each data field of the Book Object
         const bookTitleElement = document.createElement("h2");
         bookTitleElement.textContent = myLibrary[i].title;
         const bookAuthorElement = document.createElement("h3");
@@ -67,11 +83,21 @@ function displayAllBooks()
         bookPagesElement.textContent = myLibrary[i].pages + " pages";
         const bookReadElement = document.createElement("p");
         bookReadElement.textContent = "Read: " + myLibrary[i].read;
+
+        // Create a button to allow the user to remove this specific Book from myLibrary
+        const removeButton = document.createElement("button");
+        removeButton.textContent = "Remove Book";
+        // Add an event listener to the button for the click event that will call the removeBookFromLibrary function on the Book's respective index
+        removeButton.addEventListener("click", () => {
+            removeBookFromLibrary(i);
+        })
+
         // Append everything to the DOM
         bookContainer.appendChild(bookTitleElement);
         bookContainer.appendChild(bookAuthorElement);
         bookContainer.appendChild(bookPagesElement);
         bookContainer.appendChild(bookReadElement);
+        bookContainer.appendChild(removeButton);
         libraryContainer.appendChild(bookContainer);
     }
 }
