@@ -11,13 +11,13 @@ const myLibrary = [];
 function Book(title, author, pages, read) {
     this.title = title;
     this.author = author;
-    this.numPages = pages;
-    this.haveRead = read;
+    this.pages = pages;
+    this.read = read;
 
     // Function that can report the book info
     this.info = function() {
-        let haveReadString = read ? "read" : "not read yet";
-        return title + " by " + author + ", " + pages + " pages, " + haveReadString;
+        let readString = read ? "read" : "not read yet";
+        return title + " by " + author + ", " + pages + " pages, " + readString;
     }
 }
 
@@ -34,8 +34,11 @@ function addBookToLibrary(title, author, pages, read) {
 
     // Add myBook to the myLibrary array
     myLibrary.push(myBook);
+
+    console.log(myBook.info()); // placeholder
 }
 
+// Populate the array with some initial elements
 addBookToLibrary('The Hobbit', 'J.R.R. Tolkien', 295, false);
 addBookToLibrary('The Catcher in the Rye', 'J.D. Salinger', 192, true);
 addBookToLibrary('No Longer Human', 'Osamu Dazai', 176, true);
@@ -56,14 +59,33 @@ function displayAllBooks()
         bookTitleElement.textContent = book.title;
         const bookAuthorElement = document.createElement("h3");
         bookAuthorElement.textContent = book.author;
-        const bookNumPagesElement = document.createElement("p");
-        bookNumPagesElement.textContent = book.numPages + " pages";
+        const bookPagesElement = document.createElement("p");
+        bookPagesElement.textContent = book.pages + " pages";
+        const bookReadElement = document.createElement("p");
+        bookReadElement.textContent = "Read: " + book.read;
+        // Append everything to the DOM
         bookContainer.appendChild(bookTitleElement);
         bookContainer.appendChild(bookAuthorElement);
-        bookContainer.appendChild(bookNumPagesElement);
+        bookContainer.appendChild(bookPagesElement);
+        bookContainer.appendChild(bookReadElement);
         libraryContainer.appendChild(bookContainer);
-        console.log(book.info()); // Placeholder
     }
 }
 
 displayAllBooks();
+
+// Target the form element in the HTML
+const newBookForm = document.querySelector(".new-book-form");
+// Add an event listener to the form on submission
+newBookForm.addEventListener("submit", (event) => {
+    // Prevent default behavior for the submit event,
+    // which would otherwise try to send the data to a server
+    event.preventDefault();
+
+    // Access the data entered into the form
+    let title = newBookForm.elements['title'].value;
+    let author = newBookForm.elements['author'].value;
+    let pages = newBookForm.elements['pages'].value;
+    let read = newBookForm.elements['read'].value;
+    addBookToLibrary(title, author, pages, read);
+})
