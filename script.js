@@ -55,18 +55,18 @@ function displayAllBooks()
     libraryContainer.textContent = "";
 
     // Loop through the array
-    for (let book of myLibrary) {
+    for (let i = 0; i < myLibrary.length; i++) {
         // Create an HTML element to display the book
         const bookContainer = document.createElement("div");
         bookContainer.style.backgroundColor = "aliceblue";
         const bookTitleElement = document.createElement("h2");
-        bookTitleElement.textContent = book.title;
+        bookTitleElement.textContent = myLibrary[i].title;
         const bookAuthorElement = document.createElement("h3");
-        bookAuthorElement.textContent = book.author;
+        bookAuthorElement.textContent = myLibrary[i].author;
         const bookPagesElement = document.createElement("p");
-        bookPagesElement.textContent = book.pages + " pages";
+        bookPagesElement.textContent = myLibrary[i].pages + " pages";
         const bookReadElement = document.createElement("p");
-        bookReadElement.textContent = "Read: " + book.read;
+        bookReadElement.textContent = "Read: " + myLibrary[i].read;
         // Append everything to the DOM
         bookContainer.appendChild(bookTitleElement);
         bookContainer.appendChild(bookAuthorElement);
