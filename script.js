@@ -19,6 +19,12 @@ function Book(title, author, pages, read) {
         let readString = read ? "read" : "not read yet";
         return title + " by " + author + ", " + pages + " pages, " + readString;
     }
+
+    // Function that toggles the Book's read status
+    this.toggleReadStatus = function () {
+        this.read = !(this.read);
+        displayAllBooks();
+    }
 }
 
 /**
@@ -92,12 +98,21 @@ function displayAllBooks()
             removeBookFromLibrary(i);
         })
 
+        // Create a button to allow the user to change a Book's read status
+        const toggleReadStatusButton = document.createElement("button");
+        toggleReadStatusButton.textContent = "Toggle Read Status";
+        // Add an event listener to the button for the click event that will call the toggleReadStatus function on this Book Object instance
+        toggleReadStatusButton.addEventListener("click", () => {
+            myLibrary[i].toggleReadStatus();
+        })
+
         // Append everything to the DOM
         bookContainer.appendChild(bookTitleElement);
         bookContainer.appendChild(bookAuthorElement);
         bookContainer.appendChild(bookPagesElement);
         bookContainer.appendChild(bookReadElement);
         bookContainer.appendChild(removeButton);
+        bookContainer.appendChild(toggleReadStatusButton);
         libraryContainer.appendChild(bookContainer);
     }
 }
